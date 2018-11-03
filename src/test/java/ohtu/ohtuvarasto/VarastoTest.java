@@ -21,6 +21,62 @@ public class VarastoTest {
     }
 
     @Test
+    public void negativeSizeIsZero() {
+        assertEquals(0, new Varasto(-5).getTilavuus(), vertailuTarkkuus);
+    }
+
+    @Test
+    public void validStartContent() {
+        assertEquals(5, new Varasto(6, 5).getSaldo(), vertailuTarkkuus);
+    }
+
+    @Test
+    public void startOverflowRemoved() {
+        assertEquals(4, new Varasto(4, 5).getSaldo(), vertailuTarkkuus);
+    }
+
+	@Test
+	public void negativeStartContent() {
+		assertEquals(0, new Varasto(6, -5).getSaldo(), vertailuTarkkuus);
+	}
+
+	@Test
+	public void negativeSizeWithStartContent() {
+		assertEquals(0, new Varasto(-5, 5).getTilavuus(), vertailuTarkkuus);
+	}
+
+
+	@Test
+	public void toStringTest() {
+		assertEquals("saldo = 0.0, vielä tilaa 10.0", varasto.toString());
+	}
+
+	@Test
+	public void invalidAddChangesNothing() {
+		varasto.lisaaVarastoon(-100);
+		assertEquals(0, varasto.getSaldo(), vertailuTarkkuus);
+	}
+
+	@Test
+	public void invalidRemoveChangesNothing() {
+		varasto.otaVarastosta(-100);
+		assertEquals(0, varasto.getSaldo(), vertailuTarkkuus);
+	}
+
+	@Test
+	public void overflowAddFillsStorage() {
+		varasto.lisaaVarastoon(9001);
+		assertEquals(varasto.getTilavuus(), varasto.getSaldo(), vertailuTarkkuus);
+	}
+
+	@Test
+	public void overflowRemoveClearsStorage() {
+		varasto.lisaaVarastoon(5);
+		varasto.otaVarastosta(9001);
+		assertEquals(0, varasto.getSaldo(), vertailuTarkkuus);
+	}
+
+	@Test
     public void konstruktoriLuoTyhjanVaraston() {
         assertEquals(0, varasto.getSaldo(), vertailuTarkkuus);
     }
