@@ -22,7 +22,7 @@ public class VarastoTest {
 
     @Test
     public void negativeSizeIsZero() {
-        assertEquals(0, new Varasto(-5).getTilavuus(), vertailuTarkkuus);
+        assertEquals(1, new Varasto(-5).getTilavuus(), vertailuTarkkuus);
     }
 
     @Test
