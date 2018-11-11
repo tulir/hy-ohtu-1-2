@@ -1,35 +1,36 @@
 package ohtu;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.FileSystemXmlApplicationContext;
 import ohtu.verkkokauppa.*;
 
 public class Main {
 
-    public static void main(String[] args) {
-        IKirjanpito kirjanpito = new Kirjanpito();
-        Varasto varasto = new Varasto(kirjanpito);
-        Pankki pankki = new Pankki(kirjanpito);
-        Viitegeneraattori viitegeneraattori = new Viitegeneraattori();
-        Kauppa kauppa = new Kauppa(varasto, pankki, viitegeneraattori);
+	public static void main(String[] args) {
+		ApplicationContext ctx = new FileSystemXmlApplicationContext("src/main/resources/spring-context.xml");
 
-        // kauppa hoitaa yhden asiakkaan kerrallaan seuraavaan tapaan:
-        kauppa.aloitaAsiointi();
-        kauppa.lisaaKoriin(1);
-        kauppa.lisaaKoriin(3);
-        kauppa.lisaaKoriin(3);
-        kauppa.poistaKorista(1);
-        kauppa.tilimaksu("Pekka Mikkola", "1234-12345");
+		Kirjanpito kirjanpito = ctx.getBean(Kirjanpito.class);
+		Kauppa kauppa = ctx.getBean(Kauppa.class);
 
-        // seuraava asiakas
-        kauppa.aloitaAsiointi();
-        for (int i = 0; i < 24; i++) {
-            kauppa.lisaaKoriin(5);
-        }
+		// kauppa hoitaa yhden asiakkaan kerrallaan seuraavaan tapaan:
+		kauppa.aloitaAsiointi();
+		kauppa.lisaaKoriin(1);
+		kauppa.lisaaKoriin(3);
+		kauppa.lisaaKoriin(3);
+		kauppa.poistaKorista(1);
+		kauppa.tilimaksu("Pekka Mikkola", "1234-12345");
 
-        kauppa.tilimaksu("Arto Vihavainen", "3425-1652");
+		// seuraava asiakas
+		kauppa.aloitaAsiointi();
+		for (int i = 0; i < 24; i++) {
+			kauppa.lisaaKoriin(5);
+		}
 
-        // kirjanpito
-        for (String tapahtuma : kirjanpito.getTapahtumat()) {
-            System.out.println(tapahtuma);
-        }
-    }
+		kauppa.tilimaksu("Arto Vihavainen", "3425-1652");
+
+		// kirjanpito
+		for (String tapahtuma : kirjanpito.getTapahtumat()) {
+			System.out.println(tapahtuma);
+		}
+	}
 }
