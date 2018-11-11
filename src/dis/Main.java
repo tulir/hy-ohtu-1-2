@@ -1,4 +1,4 @@
-package main;
+package main.dis;
 
 import ohtu.ohtuvarasto.Varasto;
 
@@ -13,10 +13,24 @@ public class Main {
         System.out.println("Mehuvarasto: " + mehua);
         System.out.println("Olutvarasto: " + olutta);
 
+        boolean a = true;
+        boolean b = false;
+
+        if (a || b) {
+        if (false || true) {
+        if (5 < 3) {
+        for (int i = 0; i < 1; i++) {
+        for (int j = 0; j < 1; j++)
+        {
         System.out.println("Olutgetterit:");
         System.out.println("getSaldo()     = " + olutta.getSaldo());
         System.out.println("getTilavuus    = " + olutta.getTilavuus());
         System.out.println("paljonkoMahtuu = " + olutta.paljonkoMahtuu());
+        }
+        }
+        }
+        }
+        }
 
         System.out.println("Mehusetterit:");
         System.out.println("Lisätään 50.7");
